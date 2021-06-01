@@ -1,6 +1,8 @@
 # Fuzzy C-Means Clustering
 
-
+Instead of this redme Please see
+[Fuzzy C-Means Clustering.ipynb](https://github.com/alifa98/Fuzzy-C-Means-Clustering/blob/master/Fuzzy%20C-Means%20Clustering.ipynb)
+OR download [PDF](https://github.com/alifa98/Fuzzy-C-Means-Clustering/raw/master/Fuzzy%20C-Means%20Clustering.pdf)
 ```python
 # Library imports
 import numpy as np
