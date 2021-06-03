@@ -1,8 +1,6 @@
 # Fuzzy C-Means Clustering
 
-Instead of this redme Please see
-[Fuzzy C-Means Clustering.ipynb](https://github.com/alifa98/Fuzzy-C-Means-Clustering/blob/master/Fuzzy%20C-Means%20Clustering.ipynb)
-OR download [PDF](https://github.com/alifa98/Fuzzy-C-Means-Clustering/raw/master/Fuzzy%20C-Means%20Clustering.pdf)
+
 ```python
 # Library imports
 import numpy as np
@@ -27,7 +25,7 @@ raw_data_csv.append(pd.read_csv("data/data4.csv", header=None))
 ```python
 ## Definition of constants
 CONST_M = 1.4
-CONST_CLUSTERING_ITERATION_NUMBER = 50
+CONST_CLUSTERING_ITERATION_NUMBER = 10
 ```
 
 ## Functions
@@ -169,6 +167,16 @@ def defuzzification(data):
         crisp.append(np.array(data_row['fuzzy_cluster']).argmax())
     return crisp
 
+## construct an RGB colot for all data points based on each membership value.
+def get_3_cluster_gradient(data):
+    gradient = []
+    for data_index, data_row in data.iterrows():
+        values = (np.array(data_row['fuzzy_cluster']) * 255).tolist()
+        values = tuple(map(round, values))
+        gradient.append('#%02x%02x%02x' % values)
+    return gradient
+
+
 ```
 
 ### Iterative Function
@@ -237,7 +245,7 @@ fig.show()
 
 ```
 
-    <ipython-input-27-bd2066dbf82c>:17: UserWarning: Matplotlib is currently using module://ipykernel.pylab.backend_inline, which is a non-GUI backend, so cannot show the figure.
+    <ipython-input-35-bd2066dbf82c>:17: UserWarning: Matplotlib is currently using module://ipykernel.pylab.backend_inline, which is a non-GUI backend, so cannot show the figure.
       fig.show()
 
 
@@ -301,11 +309,11 @@ plt.plot(m_values,[different_m_result[i][2] for i in range(len(different_m_resul
 plt.show()
 
 for i, m in enumerate(m_values):
-    if i % 6 == 0: # because we don't want to plot all resluts
+    if i % 4 == 0: # because we don't want to plot all resluts
         plt.scatter(
             x=different_m_result[i][0][:][0],
             y=different_m_result[i][0][:][1],
-            c=defuzzification(different_m_result[i][0]),
+            c=get_3_cluster_gradient(different_m_result[i][0]),
             cmap='gist_rainbow'
         )
         plt.gca().update(dict(title="clustering with m = {}".format(m)))
@@ -337,15 +345,21 @@ for i, m in enumerate(m_values):
     
 
 
+
+    
+![png](output_14_4.png)
+    
+
+
 ### Analysis
 
 $$
 Cost = \sum_{j=1}^{N} \sum_{i=1}^{c} u_{ij}^m || X_j - V_i ||^2
 $$
 
-If m is large number, we will approach to crisp model instead of fuzzy.
+Generally if m is large number, we will approach to crisp model instead of fuzzy.
 
-because the m is between 0 and 1 so the more value for m gives less value for $u_{jk}^m$ and this reduces cost function value.
+Here, because the m is between 0 and 1 so the more value for m gives less value for $u_{jk}^m$ and this reduces cost function value.
 
 In this particular case beacase of following reasons, $m$ value hasn't much effect on clustering:
 
@@ -353,6 +367,8 @@ In this particular case beacase of following reasons, $m$ value hasn't much effe
 1. Clusters are symmetical.
 
 Actually if we use KNN instead of FCM, we will get the same result.
+
+If we consider effect of $m$ on fuzzy clustering, we can say "higher value for $m$ makes the membership values  become closer to each other." (Softer)
 
 ## Plotting Results
 
