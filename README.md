@@ -38,6 +38,7 @@ CONST_CLUSTERING_ITERATION_NUMBER = 10
 Distance function uses euclidean distance.
 
 point p and q in n-space.
+
 $$
 d(p,q) = \sqrt{\sum_{i=1}^n (q_i - p_i)^2 }
 $$
@@ -207,7 +208,7 @@ def fuzzy_C_means(input_data, clusters_number):
 
 ## Cost function and elbow method
 
-We calculate cost function for $c = 0,1,2,... ,10$ for all data files. ($c=0$ is for simplifying the index in result and should be discarded.)
+We calculate cost function for $c = 0,1,2,... ,10$ for all data files. ( $c=0$ is for simplifying the index in result and should be discarded.)
 
 
 ```python
